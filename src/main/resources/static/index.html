@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Room</title>
+  <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css">
+  <script src="/webjars/jquery/jquery.min.js"></script>
+  <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+  <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+
+  <!-- Emoji Picker -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
+</head>
+<body class="bg-light">
+
+  <!-- LOGIN FORM -->
+  <div id="name-form" class="vh-100 d-flex align-items-center justify-content-center">
+    <div class="card shadow-lg p-4" style="max-width:400px; width:100%;">
+      <h3 class="text-center mb-3">👋 Welcome to Chat Room</h3>
+      <input type="text" id="name-value" class="form-control mb-3" placeholder="Enter your name" autofocus>
+      <button class="btn btn-primary w-100" id="login">Enter Chat</button>
+    </div>
+  </div>
+
+  <!-- CHAT ROOM -->
+  <div id="chat-room" class="container-fluid d-none vh-100">
+    <div class="row h-100">
+      
+      <!-- Sidebar -->
+      <div class="col-md-3 bg-dark text-white d-flex flex-column p-3">
+        <h4 class="mb-3">👥 Online Users</h4>
+        <ul id="user-list" class="list-unstyled flex-grow-1"></ul>
+      </div>
+
+      <!-- Chat Section -->
+      <div class="col-md-9 d-flex flex-column p-0">
+        
+        <!-- Header -->
+        <div class="bg-primary text-white p-3">
+          <h4 class="m-0">💬 Chat Room</h4>
+        </div>
+
+        <!-- Messages -->
+        <div id="messages" class="flex-grow-1 p-3 overflow-auto" style="background:#f7f7f7;"></div>
+
+        <!-- Reply Preview -->
+        <div id="reply-container" class="w-100 d-none p-2 bg-light border-top">
+          <div class="reply-preview">
+            Replying to: <span id="reply-text"></span>
+            <button class="btn btn-sm btn-link text-danger p-0 ms-2" id="cancel-reply">✖</button>
+          </div>
+        </div>
+
+        <!-- Input -->
+        <div class="input-group p-3 bg-white position-relative">
+          <button class="btn btn-outline-secondary" id="emoji-btn">😊</button>
+          <input type="text" id="message-value" class="form-control" placeholder="Type your message...">
+          <button class="btn btn-success" id="send">Send</button>
+          <emoji-picker id="emoji-picker"></emoji-picker>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="/script.js"></script>
+</body>
+</html>

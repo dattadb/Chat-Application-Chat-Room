@@ -1,0 +1,57 @@
+/* Chat bubble style */
+.message {
+  max-width: 70%;
+  padding: 10px 15px;
+  margin: 5px;
+  border-radius: 15px;
+  position: relative;
+  display: inline-block;
+  clear: both;
+}
+
+.message.self {
+  background: #dcf8c6;
+  float: right;
+}
+
+.message.other {
+  background: #fff;
+  float: left;
+  border: 1px solid #ddd;
+}
+
+.message.system {
+  background: #e0e0e0;
+  text-align: center;
+  margin: 10px auto;
+  display: block;
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
+.timestamp {
+  font-size: 0.75rem;
+  color: gray;
+  margin-top: 2px;
+}
+
+/* Reply preview inside message */
+.reply-preview {
+  background: #f0f0f0;
+  border-left: 3px solid #007bff;
+  padding: 5px 10px;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  color: #333;
+  border-radius: 5px;
+}
+
+/* Emoji Picker */
+emoji-picker {
+  position: absolute;
+  bottom: 60px;
+  right: 20px;
+  display: none;
+  z-index: 1000;
+  max-height: 300px;
+}

@@ -31,9 +31,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-maven-
 
-    # 4. Build with Maven (skip tests to avoid exit code 1)
+    # 4. Build with Maven (skip tests temporarily)
     - name: Build with Maven
-      run: mvn clean install -DskipTests || echo "Build failed, continue"
+      run: mvn clean package -DskipTests
 
     # 5. Run Tests (optional)
     - name: Run Tests
@@ -43,11 +43,13 @@ jobs:
     - name: Package Artifact
       run: |
         mkdir -p build
-        if ls target/*.jar 1> /dev/null 2>&1; then
-          cp target/*.jar build/
+        JAR_FILE=$(ls target/*.jar | head -n 1)
+        if [ -f "$JAR_FILE" ]; then
+          cp "$JAR_FILE" build/
           echo "Jar copied to build folder"
         else
           echo "No jar found, skipping artifact upload"
+          exit 1
         fi
 
     # 7. Upload Artifact (latest v4)
@@ -73,7 +75,7 @@ jobs:
     - name: Deploy to Server
       run: |
         echo "Deploying Spring Boot app..."
-        # Uncomment and configure below to deploy to your server
+        # Uncomment below and configure your server
         # echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
         # chmod 600 private_key.pem
         # scp -i private_key.pem build/*.jar ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/home/app/

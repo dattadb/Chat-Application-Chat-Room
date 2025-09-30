@@ -49,12 +49,12 @@ jobs:
     - name: Package Artifact
       run: |
         mkdir -p build
-        WAR_FILE=$(ls target/*.jar 2>/dev/null | head -n 1)
+        WAR_FILE=$(ls target/*.war 2>/dev/null | head -n 1)
         if [ -f "$WAR_FILE" ]; then
           cp "$WAR_FILE" build/
-          echo "Jar copied to build folder: $WAR_FILE"
+          echo "war copied to build folder: $WAR_FILE"
         else
-          echo "No jar found, failing workflow"
+          echo "No war found, failing workflow"
           exit 1
         fi
 

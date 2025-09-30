@@ -31,7 +31,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-maven-
 
-    # 4. Build with Maven
+    # 4. Build with Maven (skip tests temporarily)
     - name: Build with Maven
       run: |
         mvn clean package -DskipTests
@@ -40,16 +40,16 @@ jobs:
           exit 1
         fi
 
-    # 5. Run Tests (optional, workflow won't fail if tests fail)
+    # 5. Run Tests (optional)
     - name: Run Tests
       run: |
-        mvn test || echo "Tests failed, continuing workflow"
+        mvn test || echo "Tests failed but continue"
 
     # 6. Package Artifact safely
     - name: Package Artifact
       run: |
         mkdir -p build
-        JAR_FILE=$(ls target/*.jar | head -n 1)
+        JAR_FILE=$(ls target/*.jar 2>/dev/null | head -n 1)
         if [ -f "$JAR_FILE" ]; then
           cp "$JAR_FILE" build/
           echo "Jar copied to build folder: $JAR_FILE"

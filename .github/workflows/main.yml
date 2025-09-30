@@ -82,7 +82,7 @@ jobs:
       run: |
         echo "Deploying Spring Boot app..."
         # Uncomment below and configure your server secrets
-        # echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
-        # chmod 600 private_key.pem
-         scp -i private_key.pem build/*.jar ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/home/app/
-         ssh -i private_key.pem ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "nohup java -jar /home/app/your-app.jar &"
+         echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
+         chmod 600 private_key.pem
+         scp -i private_key.pem build/*.war ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/home/app/
+         ssh -i private_key.pem ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "nohup java -jar /home/app/your-app.war &"

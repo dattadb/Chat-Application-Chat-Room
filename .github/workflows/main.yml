@@ -50,9 +50,9 @@ jobs:
       run: |
         mkdir -p build
         WAR_FILE=$(ls target/*.jar 2>/dev/null | head -n 1)
-        if [ -f "$JAR_FILE" ]; then
-          cp "$JAR_FILE" build/
-          echo "Jar copied to build folder: $JAR_FILE"
+        if [ -f "$WAR_FILE" ]; then
+          cp "$WAR_FILE" build/
+          echo "Jar copied to build folder: $WAR_FILE"
         else
           echo "No jar found, failing workflow"
           exit 1

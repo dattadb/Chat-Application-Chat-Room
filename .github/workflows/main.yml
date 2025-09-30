@@ -2,7 +2,7 @@ name: Spring Boot CI/CD Pipeline
 
 on:
   push:
-    branches: [ "main" ]   # main branch वर commit/push झाला की pipeline चालेल
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
@@ -22,7 +22,7 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    # 3. Cache Maven dependencies (speed up build)
+    # 3. Cache Maven dependencies
     - name: Cache Maven packages
       uses: actions/cache@v3
       with:
@@ -43,9 +43,9 @@ jobs:
     - name: Package Artifact
       run: mkdir -p build && cp target/*.jar build/
 
-    # 7. Upload build artifact
+    # 7. Upload build artifact (updated v4)
     - name: Upload Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: spring-boot-app
         path: build/*.jar
@@ -55,16 +55,20 @@ jobs:
     needs: build
 
     steps:
+    # 1. Download artifact (updated v4)
     - name: Download Artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: spring-boot-app
         path: build
 
-    # Example: Deploy to server (via SCP/SSH)
+    # 2. Deploy to Server (example)
     - name: Deploy to Server
       run: |
         echo "Deploying Spring Boot app..."
-        # Example: copy to server
-        # scp -i private_key.pem build/*.jar user@your-server:/home/app/
-        # ssh -i private_key.pem user@your-server "nohup java -jar /home/app/your-app.jar &"
+        # scp/ssh deployment commands here
+        # Example:
+        # echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
+        # chmod 600 private_key.pem
+        # scp -i private_key.pem build/*.jar ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/home/app/
+        # ssh -i private_key.pem ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "nohup java -jar /home/app/your-app.jar &"
